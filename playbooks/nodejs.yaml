@@ -26,7 +26,13 @@
       command: bash /tmp/nvm_install.sh
       args:
         creates: /home/{{ ansible_env.SUDO_USER }}/.nvm/nvm.sh
-    
+      register: nvm_install_result
+
+    - name: Log nvm installation output
+      become: no
+      debug:
+        var: nvm_install_result.stdout_lines
+      
     - name: Remove nvm installation script
       file:
         path: /tmp/nvm_install.sh
