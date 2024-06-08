@@ -32,18 +32,21 @@ jobs:
       run: source ~/.bashrc
     - name: Check NPM installation
       run: |
+        command -v npm
         if ! command -v npm &> /dev/null; then
           echo "npm not installed correctly"
           exit 1
         fi
     - name: Check Node installation
       run: |
+        command -v node
         if ! command -v node &> /dev/null; then
           echo "Node not installed correctly"
           exit 1
         fi
     - name: Check Typescript installation
       run: |
+        command -v tsc
         if ! command -v tsc &> /dev/null; then
           echo "Typescript not installed correctly"
           exit 1
