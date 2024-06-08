@@ -46,12 +46,6 @@ jobs:
           echo "Typescript not installed correctly"
           exit 1
         fi
-    - name: Check ESLint installation
-      run: |
-        if ! command -v eslint &> /dev/null; then
-          echo "eslint not installed correctly"
-          exit 1
-        fi
     - name: Check Prettier installation
       run: |
         if ! command -v prettier &> /dev/null; then
@@ -62,6 +56,12 @@ jobs:
       run: |
         if ! command -v jest &> /dev/null; then
           echo "jest not installed correctly"
+          exit 1
+        fi
+    - name: Check ESLint installation
+      run: |
+        if ! command -v eslint &> /dev/null; then
+          echo "eslint not installed correctly"
           exit 1
         fi
     - name: Check VS Code extensions installation
