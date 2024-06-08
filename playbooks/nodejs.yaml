@@ -14,9 +14,18 @@
           - build-essential
         state: present
 
-    - name: Set NVM_DIR based on XDG_CONFIG_HOME
+    - name: Set NVM_DIR using nvm logic
+      shell: |
+        if [ -z "${XDG_CONFIG_HOME-}" ]; then
+          printf %s "{{ '/home/' + ansible_env.SUDO_USER }}/.nvm"
+        else
+          printf %s "${XDG_CONFIG_HOME}/nvm"
+        fi
+      register: nvm_dir_output
+
+    - name: Set NVM_DIR fact
       set_fact:
-        nvm_dir: "{{ ([ -z ansible_env.XDG_CONFIG_HOME ] && printf %s '/home/' + ansible_env.SUDO_USER + '/.nvm' || printf %s ansible_env.XDG_CONFIG_HOME + '/nvm') }}"
+        nvm_dir: "{{ nvm_dir_output.stdout }}"
 
     - name: Download nvm install script
       become: no

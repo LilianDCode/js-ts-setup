@@ -10,9 +10,18 @@
     - name: Load NPM packages
       include_vars: js_ts_tools.yaml
 
-    - name: Set NVM_DIR based on XDG_CONFIG_HOME
+    - name: Set NVM_DIR using nvm logic
+      shell: |
+        if [ -z "${XDG_CONFIG_HOME-}" ]; then
+          printf %s "{{ '/home/' + ansible_env.SUDO_USER }}/.nvm"
+        else
+          printf %s "${XDG_CONFIG_HOME}/nvm"
+        fi
+      register: nvm_dir_output
+
+    - name: Set NVM_DIR fact
       set_fact:
-        nvm_dir: "{{ (ansible_env.XDG_CONFIG_HOME + '/nvm' | default('/home/' + ansible_env.SUDO_USER + '/.nvm'))}}"
+        nvm_dir: "{{ nvm_dir_output.stdout }}"
 
     - name: Install global npm packages
       become: no
