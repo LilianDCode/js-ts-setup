@@ -25,6 +25,13 @@ jobs:
         sudo rm -rf /usr/local/bin/node
         sudo rm -rf /usr/local/bin/npm
         sudo rm -rf /usr/local/bin/tsc
+        sudo rm -rf /usr/local/bin/prettier
+        sudo rm -rf /usr/local/bin/jest
+        sudo rm -rf /usr/local/bin/eslint
+        sudo rm -rf /usr/local/bin/node_modules
+        sudo rm -rf /usr/local/lib/nvm
+        sudo rm -rf /home/runner/.nvm
+        sudo rm -rf /home/runner/.config/nvm
     - uses: actions/checkout@v2
       name: Checkout code
     - name: Make scripts executable
