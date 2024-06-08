@@ -22,7 +22,7 @@ jobs:
     steps:
     - name: Uninstall Node, npm, and tsc
       run: |
-        apt-get remove --purge -y nodejs npm typescript
+        sudo apt-get remove --purge -y nodejs npm typescript
     - uses: actions/checkout@v2
       name: Checkout code
     - name: Make scripts executable
