@@ -22,8 +22,9 @@ jobs:
     steps:
     - name: Uninstall nodejs
       run: |
-        sudo apt purge -y nodejs npm
-        sudo apt autoremove -y nodejs npm
+        sudo rm -rf /usr/local/bin/node
+        sudo rm -rf /usr/local/bin/npm
+        sudo rm -rf /usr/local/bin/tsc
     - uses: actions/checkout@v2
       name: Checkout code
     - name: Make scripts executable
