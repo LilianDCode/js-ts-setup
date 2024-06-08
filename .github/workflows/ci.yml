@@ -20,9 +20,9 @@ jobs:
       matrix:
         os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
     steps:
-    - name: Uninstall Node, npm, and tsc
+    - name: Uninstall Node and npm
       run: |
-        sudo apt-get remove --purge -y nodejs npm tsc
+        sudo apt-get remove --purge -y nodejs npm
     - uses: actions/checkout@v2
       name: Checkout code
     - name: Make scripts executable
