@@ -11,6 +11,7 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+DIRNAME=$(dirname "$0")
 TMP_DIR=$(sudo -u "$SUDO_USER" mktemp -d)
 sudo -u "$SUDO_USER" mkdir -p "$TMP_DIR/playbooks/vars"
 
@@ -28,7 +29,7 @@ fi
 
 # Function to copy or download files
 copy_or_download() {
-  local file="$(dirname "$0")/$1"
+  local file="$DIRNAME/$1"
   local url="$GITHUB_REPO_URL/$2"
   if [[ -f $file ]]; then
     echo "$1 found locally. Copying to $TMP_DIR..."
@@ -60,8 +61,7 @@ if ! command -v ansible &> /dev/null; then
 fi
 
 # Ensure ansible can be run as the sudo user
-sudo -u "$SUDO_USER" ansible --version > /dev/null 2>&1
-if [ $? -ne 0 ]; then
+if ! sudo -u "$SUDO_USER" ansible --version > /dev/null 2>&1; then
   echo "Ansible could not be found or executed. Please check your Ansible installation."
   exit 1
 fi
