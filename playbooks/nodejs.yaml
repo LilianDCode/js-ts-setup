@@ -1,0 +1,57 @@
+---
+- name: Setup JavaScript/TypeScript Environment
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Include common tasks
+      include_tasks: common.yaml
+
+    - name: Install required packages for nvm
+      apt:
+        name:
+          - curl
+          - build-essential
+        state: present
+
+    - name: Download nvm install script
+      become: no
+      get_url:
+        url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh
+        dest: /tmp/nvm_install.sh
+        mode: '0755'
+
+    - name: Install nvm
+      become: no
+      command: bash /tmp/nvm_install.sh
+      args:
+        creates: /home/{{ ansible_env.SUDO_USER }}/.nvm/nvm.sh
+    
+    - name: Remove nvm installation script
+      file:
+        path: /tmp/nvm_install.sh
+        state: absent
+
+    - name: Install Node.js
+      become: no
+      shell: . /home/{{ ansible_env.SUDO_USER }}/.nvm/nvm.sh && nvm install {{ item }}
+      args:
+        executable: /bin/bash
+      with_items:
+        - "20"
+        
+    - name: Verify Node.js version
+      become: no
+      shell: . /home/{{ ansible_env.SUDO_USER }}/.nvm/nvm.sh && node -v
+      args:
+        executable: /bin/bash
+
+    # - name: Load NPM packages
+    #   include_vars: js_ts_tools.yaml
+
+    # - name: Install global npm packages
+    #   become: no
+    #   npm:
+    #     name: "{{ item }}"
+    #     global: yes
+    #   loop: "{{ npm_global }}"
