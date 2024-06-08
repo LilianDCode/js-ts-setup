@@ -14,6 +14,17 @@
           - build-essential
         state: present
 
+    - name: Ensure the XDG config directory exists
+      file:
+        path: "{{ ansible_env.HOME }}/.config"
+        state: directory
+        mode: '0755'
+      when: ansible_env.XDG_CONFIG_HOME is defined
+
+    - name: Set NVM_DIR based on XDG_CONFIG_HOME
+      set_fact:
+        nvm_dir: "{{ (ansible_env.XDG_CONFIG_HOME | default('/home/' + ansible_env.SUDO_USER + '/.nvm')) }}"
+
     - name: Download nvm install script
       become: no
       get_url:
@@ -21,18 +32,22 @@
         dest: /tmp/nvm_install.sh
         mode: '0755'
 
+    - name: Check nvm dir variable
+      debug:
+        var: nvm_dir
+
     - name: Install nvm
       become: no
       command: bash /tmp/nvm_install.sh
       args:
-        creates: /home/{{ ansible_env.SUDO_USER }}/.nvm/nvm.sh
+        creates: "{{ nvm_dir + '/nvm.sh' }}"
       register: nvm_install_result
 
     - name: Log nvm installation output
       become: no
       debug:
         var: nvm_install_result.stdout_lines
-      
+
     - name: Remove nvm installation script
       file:
         path: /tmp/nvm_install.sh
@@ -40,24 +55,18 @@
 
     - name: Install Node.js
       become: no
-      shell: . /home/{{ ansible_env.SUDO_USER }}/.nvm/nvm.sh && nvm install {{ item }}
+      environment:
+        NVM_DIR: "{{ nvm_dir }}"
+      shell: . "{{ nvm_dir + '/nvm.sh' }}" && nvm install {{ item }}
       args:
         executable: /bin/bash
       with_items:
         - "20"
-        
+
     - name: Verify Node.js version
       become: no
-      shell: . /home/{{ ansible_env.SUDO_USER }}/.nvm/nvm.sh && node -v
+      environment:
+        NVM_DIR: "{{ nvm_dir }}"
+      shell: . "{{ nvm_dir + '/nvm.sh' }}" && node -v
       args:
         executable: /bin/bash
-
-    # - name: Load NPM packages
-    #   include_vars: js_ts_tools.yaml
-
-    # - name: Install global npm packages
-    #   become: no
-    #   npm:
-    #     name: "{{ item }}"
-    #     global: yes
-    #   loop: "{{ npm_global }}"
