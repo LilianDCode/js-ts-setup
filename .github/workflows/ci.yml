@@ -26,6 +26,8 @@ jobs:
       run: chmod +x setup.sh
     - name: Install VS Code
       run: curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode
+    - name: Ensure nvm will be installed on $HOME/.nvm
+      run: export NVM_DIR="$HOME/.nvm" && mkdir -p $NVM_DIR
     - name: Run setup script
       run: sudo ./setup.sh
     - name: Check NPM installation
