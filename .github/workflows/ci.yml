@@ -20,6 +20,10 @@ jobs:
       matrix:
         os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
     steps:
+    - name: Uninstall nodejs
+      run: |
+        sudo apt purge -y nodejs npm
+        sudo apt autoremove -y nodejs npm
     - uses: actions/checkout@v2
       name: Checkout code
     - name: Make scripts executable
@@ -28,61 +32,58 @@ jobs:
       run: curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode
     - name: Run setup script
       run: sudo ./setup.sh
-    - name: Check installation
+    - name: Check NPM installation
       run: |
-        chmod +x test/check_installation.sh && ./test/check_installation.sh
-    # - name: Check NPM installation
-    #   run: |
-    #     which npm
-    #     if ! which npm &> /dev/null; then
-    #       echo "npm not installed correctly"
-    #       exit 1
-    #     fi
-    # - name: Check Node installation
-    #   run: |
-    #     which node
-    #     if ! which node &> /dev/null; then
-    #       echo "Node not installed correctly"
-    #       exit 1
-    #     fi
-    # - name: Check Typescript installation
-    #   run: |
-    #     which tsc
-    #     if ! which tsc &> /dev/null; then
-    #       echo "Typescript not installed correctly"
-    #       exit 1
-    #     fi
-    # - name: Check Prettier installation
-    #   run: |
-    #     which prettier
-    #     if ! which prettier &> /dev/null; then
-    #       echo "prettier not installed correctly"
-    #       exit 1
-    #     fi
-    # - name: Check Jest installation
-    #   run: |
-    #     which jest
-    #     if ! which jest &> /dev/null; then
-    #       echo "jest not installed correctly"
-    #       exit 1
-    #     fi
-    # - name: Check ESLint installation
-    #   run: |
-    #     which eslint
-    #     if ! which eslint &> /dev/null; then
-    #       echo "eslint not installed correctly"
-    #       exit 1
-    #     fi
-    # - name: Check VS Code extensions installation
-    #   run: |
-    #     EXTENSIONS=$(code --list-extensions)
-    #     EXPECTED_EXTENSIONS="dbaeumer.vscode-eslint esbenp.prettier-vscode ms-vscode.vscode-typescript-tslint-plugin xabikos.javascriptsnippets christian-kohler.npm-intellisense christian-kohler.path-intellisense"
-    #     for EXTENSION in $EXPECTED_EXTENSIONS; do
-    #       if ! echo "$EXTENSIONS" | grep -q "$EXTENSION"; then
-    #         echo "VS Code extension $EXTENSION not installed correctly"
-    #         exit 1
-    #       fi
-    #     done
+        command -v npm
+        if ! command -v npm &> /dev/null; then
+          echo "npm not installed correctly"
+          exit 1
+        fi
+    - name: Check Node installation
+      run: |
+        command -v node
+        if ! command -v node &> /dev/null; then
+          echo "Node not installed correctly"
+          exit 1
+        fi
+    - name: Check Typescript installation
+      run: |
+        command -v tsc
+        if ! command -v tsc &> /dev/null; then
+          echo "Typescript not installed correctly"
+          exit 1
+        fi
+    - name: Check Prettier installation
+      run: |
+        command -v prettier
+        if ! command -v prettier &> /dev/null; then
+          echo "prettier not installed correctly"
+          exit 1
+        fi
+    - name: Check Jest installation
+      run: |
+        command -v jest
+        if ! command -v jest &> /dev/null; then
+          echo "jest not installed correctly"
+          exit 1
+        fi
+    - name: Check ESLint installation
+      run: |
+        command -v eslint
+        if ! command -v eslint &> /dev/null; then
+          echo "eslint not installed correctly"
+          exit 1
+        fi
+    - name: Check VS Code extensions installation
+      run: |
+        EXTENSIONS=$(code --list-extensions)
+        EXPECTED_EXTENSIONS="dbaeumer.vscode-eslint esbenp.prettier-vscode ms-vscode.vscode-typescript-tslint-plugin xabikos.javascriptsnippets christian-kohler.npm-intellisense christian-kohler.path-intellisense"
+        for EXTENSION in $EXPECTED_EXTENSIONS; do
+          if ! echo "$EXTENSIONS" | grep -q "$EXTENSION"; then
+            echo "VS Code extension $EXTENSION not installed correctly"
+            exit 1
+          fi
+        done
 
   release:
     needs: test-setup
