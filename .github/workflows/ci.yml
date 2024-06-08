@@ -30,43 +30,43 @@ jobs:
       run: sudo ./setup.sh
     - name: Check NPM installation
       run: |
-        which -v npm
-        if ! which -v npm &> /dev/null; then
+        which npm
+        if ! which npm &> /dev/null; then
           echo "npm not installed correctly"
           exit 1
         fi
     - name: Check Node installation
       run: |
-        which -v node
-        if ! which -v node &> /dev/null; then
+        which node
+        if ! which node &> /dev/null; then
           echo "Node not installed correctly"
           exit 1
         fi
     - name: Check Typescript installation
       run: |
-        which -v tsc
-        if ! which -v tsc &> /dev/null; then
+        which tsc
+        if ! which tsc &> /dev/null; then
           echo "Typescript not installed correctly"
           exit 1
         fi
     - name: Check Prettier installation
       run: |
-        which -v prettier
-        if ! which -v prettier &> /dev/null; then
+        which prettier
+        if ! which prettier &> /dev/null; then
           echo "prettier not installed correctly"
           exit 1
         fi
     - name: Check Jest installation
       run: |
-        which -v jest
-        if ! which -v jest &> /dev/null; then
+        which jest
+        if ! which jest &> /dev/null; then
           echo "jest not installed correctly"
           exit 1
         fi
     - name: Check ESLint installation
       run: |
-        which -v eslint
-        if ! which -v eslint &> /dev/null; then
+        which eslint
+        if ! which eslint &> /dev/null; then
           echo "eslint not installed correctly"
           exit 1
         fi
