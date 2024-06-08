@@ -28,6 +28,8 @@ jobs:
       run: curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode
     - name: Run setup script
       run: sudo ./setup.sh
+    - name: Source the .bashrc file
+      run: source ~/.bashrc
     - name: Check NPM installation
       run: |
         if ! command -v npm &> /dev/null; then
