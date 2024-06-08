@@ -12,10 +12,14 @@
 
     - name: Set NVM_DIR using nvm logic
       shell: |
-        if [ -z "${XDG_CONFIG_HOME-}" ]; then
-          printf %s "{{ '/home/' + ansible_env.SUDO_USER }}/.nvm"
+        if [ -z "${NVM_DIR-}" ]; then
+          if [ -z "${XDG_CONFIG_HOME-}" ]; then
+            printf %s "${HOME}/.nvm"
+          else
+            printf %s "${XDG_CONFIG_HOME}/nvm"
+          fi
         else
-          printf %s "${XDG_CONFIG_HOME}/nvm"
+          printf %s "${NVM_DIR}"
         fi
       register: nvm_dir_output
 
