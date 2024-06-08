@@ -1,0 +1,41 @@
+ARG UBUNTU_VERSION=latest
+
+FROM ubuntu:${UBUNTU_VERSION}
+
+# Set environment variables to noninteractive mode
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y tzdata sudo curl
+
+RUN useradd -ms /bin/bash ldcode && \
+    echo 'ldcode ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+USER ldcode
+
+# Install vscode
+RUN /bin/bash -c "curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode"
+
+USER root
+
+# Create /usr/local/ldcode directory if it doesn't exist
+RUN mkdir -p /usr/local/ldcode/js-ts-setup
+
+# Copy the setup script
+COPY ./setup.sh /usr/local/ldcode/js-ts-setup/setup.sh
+RUN chmod +x /usr/local/ldcode/js-ts-setup/setup.sh
+
+# Add command script to check installation
+COPY ./test/check_installation.sh /usr/local/ldcode/js-ts-setup/check_installation.sh
+RUN chmod +x /usr/local/ldcode/js-ts-setup/check_installation.sh
+
+# Copy ansible roles for development purposes
+COPY ./playbooks /usr/local/ldcode/js-ts-setup/playbooks
+
+# Copy the entrypoint script
+COPY ./.docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh 
+
+USER ldcode
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD /bin/bash -c -i "sudo /usr/local/ldcode/js-ts-setup/setup.sh && . ~/.bashrc && /usr/local/ldcode/js-ts-setup/check_installation.sh && sleep infinity"

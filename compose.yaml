@@ -1,0 +1,15 @@
+services:
+  ldcode-js-ts-setup:
+    build: 
+      context: .
+      dockerfile: .docker/Dockerfile.${DEV_MODE:-dev}
+      args:
+        - UBUNTU_VERSION=${UBUNTU_VERSION:-latest}
+    container_name: ldcode-js-ts-setup
+    tty: true
+    stdin_open: true
+    develop:
+      watch:
+        - action: rebuild
+          path: ./setup.sh
+          target: /usr/local/ldcode/js-ts-setup/setup.sh
