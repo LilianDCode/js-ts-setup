@@ -28,47 +28,45 @@ jobs:
       run: curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode
     - name: Run setup script
       run: sudo ./setup.sh
-    - name: Source the .bashrc file
-      run: source ~/.bashrc
     - name: Check NPM installation
       run: |
-        command -v npm
-        if ! command -v npm &> /dev/null; then
+        which -v npm
+        if ! which -v npm &> /dev/null; then
           echo "npm not installed correctly"
           exit 1
         fi
     - name: Check Node installation
       run: |
-        command -v node
-        if ! command -v node &> /dev/null; then
+        which -v node
+        if ! which -v node &> /dev/null; then
           echo "Node not installed correctly"
           exit 1
         fi
     - name: Check Typescript installation
       run: |
-        command -v tsc
-        if ! command -v tsc &> /dev/null; then
+        which -v tsc
+        if ! which -v tsc &> /dev/null; then
           echo "Typescript not installed correctly"
           exit 1
         fi
     - name: Check Prettier installation
       run: |
-        command -v prettier
-        if ! command -v prettier &> /dev/null; then
+        which -v prettier
+        if ! which -v prettier &> /dev/null; then
           echo "prettier not installed correctly"
           exit 1
         fi
     - name: Check Jest installation
       run: |
-        command -v jest
-        if ! command -v jest &> /dev/null; then
+        which -v jest
+        if ! which -v jest &> /dev/null; then
           echo "jest not installed correctly"
           exit 1
         fi
     - name: Check ESLint installation
       run: |
-        command -v eslint
-        if ! command -v eslint &> /dev/null; then
+        which -v eslint
+        if ! which -v eslint &> /dev/null; then
           echo "eslint not installed correctly"
           exit 1
         fi
