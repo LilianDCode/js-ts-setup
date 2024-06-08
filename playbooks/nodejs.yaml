@@ -14,13 +14,6 @@
           - build-essential
         state: present
 
-    - name: Ensure the XDG config directory exists
-      file:
-        path: "{{ ansible_env.HOME }}/.config"
-        state: directory
-        mode: '0755'
-      when: ansible_env.XDG_CONFIG_HOME is defined
-
     - name: Set NVM_DIR based on XDG_CONFIG_HOME
       set_fact:
         nvm_dir: "{{ (ansible_env.XDG_CONFIG_HOME + '/nvm' | default('/home/' + ansible_env.SUDO_USER + '/.nvm'))}}"
