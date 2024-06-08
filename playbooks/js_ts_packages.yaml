@@ -14,7 +14,7 @@
       shell: |
         if [ -z "${NVM_DIR-}" ]; then
           if [ -z "${XDG_CONFIG_HOME-}" ]; then
-            printf %s "${HOME}/.nvm"
+            printf %s "{{ '/home/' + ansible_env.SUDO_USER }}/.nvm"
           else
             printf %s "${XDG_CONFIG_HOME}/nvm"
           fi
