@@ -20,18 +20,6 @@ jobs:
       matrix:
         os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
     steps:
-    - name: Uninstall nodejs
-      run: |
-        sudo rm -rf /usr/local/bin/node
-        sudo rm -rf /usr/local/bin/npm
-        sudo rm -rf /usr/local/bin/tsc
-        sudo rm -rf /usr/local/bin/prettier
-        sudo rm -rf /usr/local/bin/jest
-        sudo rm -rf /usr/local/bin/eslint
-        sudo rm -rf /usr/local/bin/node_modules
-        sudo rm -rf /usr/local/lib/nvm
-        sudo rm -rf /home/runner/.nvm
-        sudo rm -rf /home/runner/.config/nvm
     - uses: actions/checkout@v2
       name: Checkout code
     - name: Make scripts executable
@@ -42,6 +30,7 @@ jobs:
       run: sudo ./setup.sh
     - name: Check NPM installation
       run: |
+        . "$NVM_DIR/nvm.sh"
         command -v npm
         if ! command -v npm &> /dev/null; then
           echo "npm not installed correctly"
@@ -49,6 +38,7 @@ jobs:
         fi
     - name: Check Node installation
       run: |
+        . "$NVM_DIR/nvm.sh"
         command -v node
         if ! command -v node &> /dev/null; then
           echo "Node not installed correctly"
@@ -56,6 +46,7 @@ jobs:
         fi
     - name: Check Typescript installation
       run: |
+        . "$NVM_DIR/nvm.sh"
         command -v tsc
         if ! command -v tsc &> /dev/null; then
           echo "Typescript not installed correctly"
@@ -63,6 +54,7 @@ jobs:
         fi
     - name: Check Prettier installation
       run: |
+        . "$NVM_DIR/nvm.sh"
         command -v prettier
         if ! command -v prettier &> /dev/null; then
           echo "prettier not installed correctly"
@@ -70,6 +62,7 @@ jobs:
         fi
     - name: Check Jest installation
       run: |
+        . "$NVM_DIR/nvm.sh"
         command -v jest
         if ! command -v jest &> /dev/null; then
           echo "jest not installed correctly"
@@ -77,6 +70,7 @@ jobs:
         fi
     - name: Check ESLint installation
       run: |
+        . "$NVM_DIR/nvm.sh"
         command -v eslint
         if ! command -v eslint &> /dev/null; then
           echo "eslint not installed correctly"
