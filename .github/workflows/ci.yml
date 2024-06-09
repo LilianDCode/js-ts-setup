@@ -30,7 +30,10 @@ jobs:
       run: npm config delete prefix
     - name: Run setup script
       shell: bash --login {0}
-      run: sudo ./setup.sh
+      run: sudo ./setup.sh 
+    - name: Use node
+      shell: bash --login {0}
+      run: nvm use
     - name: Check NPM installation
       shell: bash --login {0}
       run: |
