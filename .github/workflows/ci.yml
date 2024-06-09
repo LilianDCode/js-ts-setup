@@ -33,7 +33,7 @@ jobs:
       run: sudo ./setup.sh 
     - name: Use node
       shell: bash --login {0}
-      run: nvm use node
+      run: source ~/.bashrc && nvm use node
     - name: Check NPM installation
       shell: bash --login {0}
       run: |
