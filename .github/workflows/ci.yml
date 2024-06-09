@@ -26,51 +26,54 @@ jobs:
       run: chmod +x setup.sh
     - name: Install VS Code
       run: curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode
+    - name: Delete npm prefix
+      run: npm config delete prefix
     - name: Run setup script
+      shell: bash --login {0}
       run: sudo ./setup.sh
     - name: Check NPM installation
+      shell: bash --login {0}
       run: |
-        . "$NVM_DIR/nvm.sh"
         command -v npm
         if ! command -v npm &> /dev/null; then
           echo "npm not installed correctly"
           exit 1
         fi
     - name: Check Node installation
+      shell: bash --login {0}
       run: |
-        . "$NVM_DIR/nvm.sh"
         command -v node
         if ! command -v node &> /dev/null; then
           echo "Node not installed correctly"
           exit 1
         fi
     - name: Check Typescript installation
+      shell: bash --login {0}
       run: |
-        . "$NVM_DIR/nvm.sh"
         command -v tsc
         if ! command -v tsc &> /dev/null; then
           echo "Typescript not installed correctly"
           exit 1
         fi
     - name: Check Prettier installation
+      shell: bash --login {0}
       run: |
-        . "$NVM_DIR/nvm.sh"
         command -v prettier
         if ! command -v prettier &> /dev/null; then
           echo "prettier not installed correctly"
           exit 1
         fi
     - name: Check Jest installation
+      shell: bash --login {0}
       run: |
-        . "$NVM_DIR/nvm.sh"
         command -v jest
         if ! command -v jest &> /dev/null; then
           echo "jest not installed correctly"
           exit 1
         fi
     - name: Check ESLint installation
+      shell: bash --login {0}
       run: |
-        . "$NVM_DIR/nvm.sh"
         command -v eslint
         if ! command -v eslint &> /dev/null; then
           echo "eslint not installed correctly"
