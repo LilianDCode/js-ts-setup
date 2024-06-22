@@ -1,7 +1,6 @@
 extensions:
   - dbaeumer.vscode-eslint
   - esbenp.prettier-vscode
-  - ms-vscode.vscode-typescript-tslint-plugin
   - xabikos.JavaScriptSnippets
   - christian-kohler.npm-intellisense
   - christian-kohler.path-intellisense
