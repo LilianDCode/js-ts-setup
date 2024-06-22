@@ -27,6 +27,10 @@
       set_fact:
         nvm_dir: "{{ nvm_dir_output.stdout }}"
 
+    - name: Debug NVM_DIR
+      debug:
+        var: nvm_dir
+
     - name: Install global npm packages
       become: no
       shell: . {{ nvm_dir }}/nvm.sh && npm install -g {{ item }}
