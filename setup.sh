@@ -69,9 +69,9 @@ fi
 # Run Ansible playbooks as the sudo user
 echo "Installing tools..."
 ls -l "$TMP_DIR/playbooks"
-sudo -u "$SUDO_USER"  ansible-playbook "$TMP_DIR/playbooks/nodejs.yaml"
+ansible-playbook "$TMP_DIR/playbooks/nodejs.yaml"
 echo "Installing packages..."
-sudo -u "$SUDO_USER"  ansible-playbook "$TMP_DIR/playbooks/js_ts_packages.yaml"
+ansible-playbook "$TMP_DIR/playbooks/js_ts_packages.yaml"
 echo "Installing VSCode extensions..."
 sudo -u "$SUDO_USER"  ansible-playbook "$TMP_DIR/playbooks/vscode-extensions.yaml"
 echo "All checks passed! Installation complete."
