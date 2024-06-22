@@ -4,7 +4,6 @@
 
   tasks:
     - name: Include common tasks
-      become: yes
       include_tasks: common.yaml
 
     - name: Load NPM packages
