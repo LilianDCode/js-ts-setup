@@ -1,16 +1,18 @@
 ---
 - name: Setup JavaScript/TypeScript Packages
   hosts: localhost
-  become: yes
 
   tasks:
     - name: Include common tasks
+      become: yes
       include_tasks: common.yaml
 
     - name: Load NPM packages
+      become: no
       include_vars: js_ts_tools.yaml
 
     - name: Set NVM_DIR using nvm logic
+      become: no
       shell: |
         if [ -z "${NVM_DIR-}" ]; then
           if [ -z "${XDG_CONFIG_HOME-}" ]; then
@@ -24,6 +26,7 @@
       register: nvm_dir_output
 
     - name: Set NVM_DIR fact
+      become: no
       set_fact:
         nvm_dir: "{{ nvm_dir_output.stdout }}"
 

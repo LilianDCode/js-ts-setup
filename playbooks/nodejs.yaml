@@ -1,13 +1,14 @@
 ---
 - name: Setup JavaScript/TypeScript Environment
   hosts: localhost
-  become: yes
 
   tasks:
     - name: Include common tasks
+      become: yes
       include_tasks: common.yaml
 
     - name: Install required packages for nvm
+      become: yes
       apt:
         name:
           - curl
@@ -15,6 +16,7 @@
         state: present
 
     - name: Set NVM_DIR using nvm logic
+      become: no
       shell: |
         if [ -z "${NVM_DIR-}" ]; then
           if [ -z "${XDG_CONFIG_HOME-}" ]; then
@@ -28,6 +30,7 @@
       register: nvm_dir_output
 
     - name: Set NVM_DIR fact
+      become: no
       set_fact:
         nvm_dir: "{{ nvm_dir_output.stdout }}"
 
@@ -39,12 +42,12 @@
         mode: '0755'
 
     - name: Check nvm dir variable
+      become: no
       debug:
         var: nvm_dir
 
     - name: Install nvm
       become: no
-      become_user: "{{ ansible_env.SUDO_USER }}"
       command: bash /tmp/nvm_install.sh
       args:
         creates: "{{ nvm_dir + '/nvm.sh' }}"
@@ -56,6 +59,7 @@
         var: nvm_install_result.stdout_lines
 
     - name: Remove nvm installation script
+      become: no
       file:
         path: /tmp/nvm_install.sh
         state: absent
