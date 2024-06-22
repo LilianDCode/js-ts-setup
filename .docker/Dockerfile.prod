@@ -5,22 +5,32 @@ FROM ubuntu:${UBUNTU_VERSION}
 # Set environment variables to noninteractive mode
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install curl
-RUN apt-get update && apt-get install -y curl sudo
+RUN apt-get update && apt-get install -y tzdata sudo curl
 
-COPY ./test/check_installation.sh /check_installation.sh
-RUN chmod +x /check_installation.sh
-
-COPY ./.docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Create a non-root user
 RUN useradd -ms /bin/bash ldcode && \
     echo 'ldcode ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+USER ldcode
+
+# Install vscode
+RUN /bin/bash -c "curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode"
+
+USER root
+
+# Create /usr/local/ldcode directory if it doesn't exist
+RUN mkdir -p /usr/local/ldcode/js-ts-setup
+
+# Add command script to check installation
+COPY ./test/check_installation.sh /usr/local/ldcode/js-ts-setup/check_installation.sh
+RUN chmod +x /usr/local/ldcode/js-ts-setup/check_installation.sh
+
+# Copy the entrypoint script
+COPY ./.docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh 
+
 USER ldcode
 
 RUN /bin/bash -c "curl -fsSL https://raw.githubusercontent.com/LilianDCode/js-ts-setup/main/setup.sh | sudo bash"
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD /bin/bash -c "/check_installation.sh"
+CMD /bin/bash -c -i "/usr/local/ldcode/js-ts-setup/check_installation.sh && sleep infinity"

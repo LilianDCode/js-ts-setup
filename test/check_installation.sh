@@ -45,6 +45,3 @@ if [ "$SUCCESS_INSTALLATION" -eq 1 ]; then
         echo "Error during installation of vscode extensions. ❌ Please check logs for more details."
     fi
 fi
-
-# Keep the container running
-sleep infinity
