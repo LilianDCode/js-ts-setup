@@ -48,6 +48,8 @@
 
     - name: Install nvm
       become: no
+      environment:
+        HOME: "/home/{{ ansible_env.SUDO_USER }}"
       command: bash /tmp/nvm_install.sh
       args:
         creates: "{{ nvm_dir + '/nvm.sh' }}"
