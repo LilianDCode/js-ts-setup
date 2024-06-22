@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-GITHUB_REPO_URL="https://raw.githubusercontent.com/yourusername/my-js-ts-setup/main"
+GITHUB_REPO_URL="https://raw.githubusercontent.com/LilianDCode/js-ts-setup/main"
 PLAYBOOKS=("common.yaml" "nodejs.yaml" "js_ts_packages.yaml" "vscode-extensions.yaml")
 CONFIG_FILES=("js_ts_tools.yaml" "vscode_extensions.yaml")
 
