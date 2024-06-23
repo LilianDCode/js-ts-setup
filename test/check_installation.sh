@@ -45,3 +45,5 @@ if [ "$SUCCESS_INSTALLATION" -eq 1 ]; then
         echo "Error during installation of vscode extensions. ❌ Please check logs for more details."
     fi
 fi
+
+exit $EXIT_CODE
