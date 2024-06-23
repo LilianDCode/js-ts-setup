@@ -24,7 +24,6 @@ curl -fsSL https://raw.githubusercontent.com/LilianDCode/js-ts-setup/main/setup.
 | --- | --- |
 | [Node.js](https://nodejs.org/) | JavaScript runtime built on Chrome's V8 JavaScript engine. |
 | [npm](https://www.npmjs.com/) | Package manager for Node.js. |
-| [Yarn](https://yarnpkg.com/) | Fast, reliable, and secure dependency management. |
 | [TypeScript](https://www.typescriptlang.org/) | Typed superset of JavaScript that compiles to plain JavaScript. |
 
 ### VSCode extensions
@@ -35,7 +34,6 @@ In addition to the tools mentioned above, there are several Visual Studio Code e
 | --- | --- |
 | [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) | Integrates ESLint into VS Code. |
 | [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) | Code formatter using prettier. |
-| [TypeScript TSLint Plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin) | TSLint support for TypeScript. |
 | [JavaScript Snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets) | Code snippets for JavaScript. |
 | [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense) | IntelliSense for npm modules. |
 | [Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense) | IntelliSense for file paths. |
