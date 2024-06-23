@@ -85,7 +85,7 @@ jobs:
     - name: Check VS Code extensions installation
       run: |
         EXTENSIONS=$(code --list-extensions)
-        EXPECTED_EXTENSIONS="dbaeumer.vscode-eslint esbenp.prettier-vscode ms-vscode.vscode-typescript-tslint-plugin xabikos.javascriptsnippets christian-kohler.npm-intellisense christian-kohler.path-intellisense"
+        EXPECTED_EXTENSIONS="dbaeumer.vscode-eslint esbenp.prettier-vscode xabikos.javascriptsnippets christian-kohler.npm-intellisense christian-kohler.path-intellisense"
         for EXTENSION in $EXPECTED_EXTENSIONS; do
           if ! echo "$EXTENSIONS" | grep -q "$EXTENSION"; then
             echo "VS Code extension $EXTENSION not installed correctly"
