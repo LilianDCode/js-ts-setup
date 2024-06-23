@@ -38,4 +38,4 @@ USER ldcode
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD /bin/bash -c -i "sudo /usr/local/ldcode/js-ts-setup/setup.sh && . ~/.bashrc && /usr/local/ldcode/js-ts-setup/check_installation.sh && sleep infinity"
+CMD /bin/bash -c -i "sudo /usr/local/ldcode/js-ts-setup/setup.sh && . ~/.bashrc && /usr/local/ldcode/js-ts-setup/check_installation.sh"

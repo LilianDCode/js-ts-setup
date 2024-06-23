@@ -33,4 +33,4 @@ RUN /bin/bash -c "curl -fsSL https://raw.githubusercontent.com/LilianDCode/js-ts
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD /bin/bash -c -i "/usr/local/ldcode/js-ts-setup/check_installation.sh && sleep infinity"
+CMD /bin/bash -c -i "/usr/local/ldcode/js-ts-setup/check_installation.sh"
