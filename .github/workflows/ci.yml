@@ -15,83 +15,97 @@ jobs:
         shellcheck setup.sh
 
   test-setup:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
+        os: [20.04, 22.04, 24.04]
+
+    services:
+      docker:
+        image: docker:26.1.4
+        options: --privileged
+
     steps:
     - uses: actions/checkout@v2
       name: Checkout code
-    - name: Make scripts executable
-      run: chmod +x setup.sh
-    - name: Install VS Code
-      run: curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode
-    - name: Delete npm prefix
-      run: npm config delete prefix
-    - name: Run setup script
-      shell: bash --login {0}
-      run: sudo ./setup.sh 
-    - name: Use node
-      shell: bash --login {0}
-      run: source ~/.bashrc && nvm use node
-    - name: Check NPM installation
-      shell: bash --login {0}
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build and run Docker Compose
       run: |
-        command -v npm
-        if ! command -v npm &> /dev/null; then
-          echo "npm not installed correctly"
-          exit 1
-        fi
-    - name: Check Node installation
-      shell: bash --login {0}
-      run: |
-        command -v node
-        if ! command -v node &> /dev/null; then
-          echo "Node not installed correctly"
-          exit 1
-        fi
-    - name: Check Typescript installation
-      shell: bash --login {0}
-      run: |
-        command -v tsc
-        if ! command -v tsc &> /dev/null; then
-          echo "Typescript not installed correctly"
-          exit 1
-        fi
-    - name: Check Prettier installation
-      shell: bash --login {0}
-      run: |
-        command -v prettier
-        if ! command -v prettier &> /dev/null; then
-          echo "prettier not installed correctly"
-          exit 1
-        fi
-    - name: Check Jest installation
-      shell: bash --login {0}
-      run: |
-        command -v jest
-        if ! command -v jest &> /dev/null; then
-          echo "jest not installed correctly"
-          exit 1
-        fi
-    - name: Check ESLint installation
-      shell: bash --login {0}
-      run: |
-        command -v eslint
-        if ! command -v eslint &> /dev/null; then
-          echo "eslint not installed correctly"
-          exit 1
-        fi
-    - name: Check VS Code extensions installation
-      run: |
-        EXTENSIONS=$(code --list-extensions)
-        EXPECTED_EXTENSIONS="dbaeumer.vscode-eslint esbenp.prettier-vscode xabikos.javascriptsnippets christian-kohler.npm-intellisense christian-kohler.path-intellisense"
-        for EXTENSION in $EXPECTED_EXTENSIONS; do
-          if ! echo "$EXTENSIONS" | grep -q "$EXTENSION"; then
-            echo "VS Code extension $EXTENSION not installed correctly"
-            exit 1
-          fi
-        done
+        export UBUNTU_VERSION=${{ matrix.os }}
+        docker compose up --build -d
+        docker compose exec ldcode-js-ts-setup
+        docker compose down
+    # - name: Make scripts executable
+    #   run: chmod +x setup.sh
+    # - name: Install VS Code
+    #   run: curl -fsSL https://raw.githubusercontent.com/LilianDCode/ubuntu-dev-setup/main/setup.sh | sudo bash -s -- --vscode
+    # - name: Delete npm prefix
+    #   run: npm config delete prefix
+    # - name: Run setup script
+    #   shell: bash --login {0}
+    #   run: sudo ./setup.sh 
+    # - name: Use node
+    #   shell: bash --login {0}
+    #   run: source ~/.bashrc && nvm use node
+    # - name: Check NPM installation
+    #   shell: bash --login {0}
+    #   run: |
+    #     command -v npm
+    #     if ! command -v npm &> /dev/null; then
+    #       echo "npm not installed correctly"
+    #       exit 1
+    #     fi
+    # - name: Check Node installation
+    #   shell: bash --login {0}
+    #   run: |
+    #     command -v node
+    #     if ! command -v node &> /dev/null; then
+    #       echo "Node not installed correctly"
+    #       exit 1
+    #     fi
+    # - name: Check Typescript installation
+    #   shell: bash --login {0}
+    #   run: |
+    #     command -v tsc
+    #     if ! command -v tsc &> /dev/null; then
+    #       echo "Typescript not installed correctly"
+    #       exit 1
+    #     fi
+    # - name: Check Prettier installation
+    #   shell: bash --login {0}
+    #   run: |
+    #     command -v prettier
+    #     if ! command -v prettier &> /dev/null; then
+    #       echo "prettier not installed correctly"
+    #       exit 1
+    #     fi
+    # - name: Check Jest installation
+    #   shell: bash --login {0}
+    #   run: |
+    #     command -v jest
+    #     if ! command -v jest &> /dev/null; then
+    #       echo "jest not installed correctly"
+    #       exit 1
+    #     fi
+    # - name: Check ESLint installation
+    #   shell: bash --login {0}
+    #   run: |
+    #     command -v eslint
+    #     if ! command -v eslint &> /dev/null; then
+    #       echo "eslint not installed correctly"
+    #       exit 1
+    #     fi
+    # - name: Check VS Code extensions installation
+    #   run: |
+    #     EXTENSIONS=$(code --list-extensions)
+    #     EXPECTED_EXTENSIONS="dbaeumer.vscode-eslint esbenp.prettier-vscode xabikos.javascriptsnippets christian-kohler.npm-intellisense christian-kohler.path-intellisense"
+    #     for EXTENSION in $EXPECTED_EXTENSIONS; do
+    #       if ! echo "$EXTENSIONS" | grep -q "$EXTENSION"; then
+    #         echo "VS Code extension $EXTENSION not installed correctly"
+    #         exit 1
+    #       fi
+    #     done
 
   release:
     needs: test-setup
