@@ -5,7 +5,7 @@ FROM ubuntu:${UBUNTU_VERSION}
 # Set environment variables to noninteractive mode
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y tzdata sudo curl
+RUN apt-get update && apt-get install -y tzdata sudo curl python3-venv
 
 RUN useradd -ms /bin/bash ldcode && \
     echo 'ldcode ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
