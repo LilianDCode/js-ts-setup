@@ -6,9 +6,9 @@ This project provides a script to set up a development environment on Ubuntu for
 
 | Ubuntu Version | Status |
 | -------------- | ------ |
-| Ubuntu 24.04   | ![Ubuntu 24.04](https://github.com/yourusername/my-js-ts-setup/actions/workflows/ci.yml/badge.svg?branch=main&event=push&job=test-setup&matrix=os=ubuntu-24.04) |
-| Ubuntu 22.04   | ![Ubuntu 22.04](https://github.com/yourusername/my-js-ts-setup/actions/workflows/ci.yml/badge.svg?branch=main&event=push&job=test-setup&matrix=os=ubuntu-22.04) |
-| Ubuntu 20.04   | ![Ubuntu 20.04](https://github.com/yourusername/my-js-ts-setup/actions/workflows/ci.yml/badge.svg?branch=main&event=push&job=test-setup&matrix=os=ubuntu-20.04) |
+| Ubuntu 24.04   | ![Ubuntu 24.04](https://github.com/LilianDCode/js-ts-setup/actions/workflows/ci.yml/badge.svg?branch=main&event=push&job=test-setup&matrix=os=ubuntu-24.04) |
+| Ubuntu 22.04   | ![Ubuntu 22.04](https://github.com/LilianDCode/js-ts-setup/actions/workflows/ci.yml/badge.svg?branch=main&event=push&job=test-setup&matrix=os=ubuntu-22.04) |
+| Ubuntu 20.04   | ![Ubuntu 20.04](https://github.com/LilianDCode/js-ts-setup/actions/workflows/ci.yml/badge.svg?branch=main&event=push&job=test-setup&matrix=os=ubuntu-20.04) |
 
 ## Usage
 
