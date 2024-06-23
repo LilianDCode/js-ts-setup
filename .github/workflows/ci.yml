@@ -34,7 +34,6 @@ jobs:
       run: |
         export UBUNTU_VERSION=${{ matrix.os }}
         docker compose up --build -d
-        docker compose exec ldcode-js-ts-setup
         docker compose down
     # - name: Make scripts executable
     #   run: chmod +x setup.sh
